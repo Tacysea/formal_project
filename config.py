@@ -1,6 +1,6 @@
 from redis import StrictRedis
 class Config(object):
-    DEBUG = True
+    DEBUG = None
     # 配置密钥(注意密钥的设置方式)
 
     # 配置sqlalchemy，链接数据库
@@ -22,3 +22,15 @@ class Config(object):
     SESSION_REDIS = StrictRedis(host=REDIS_HOST, port=REDIS_PORT)
     # 指定session信息过期时间,以秒为单位，设置是时间为一天
     PERMANENT_SESSION_LIFETIME = 86400
+
+
+class development_model(Config):
+    DEBUG = True
+
+class production_model(Config):
+    DEBUG = False
+
+config_dict = {
+    'development':development_model,
+    'production':production_model
+}
